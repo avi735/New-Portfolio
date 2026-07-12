@@ -1,6 +1,8 @@
 {
-  "name": "portfolio",
-  "version": "0.1.0",
+  "name": "avinash-portfolio",
+  "version": "1.0.0",
+  "description": "Professional Software Engineering Portfolio of Avinash Kumar, built with Next.js, Tailwind CSS, and Three.js",
+  "author": "Avinash Kumar",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,9 +10,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@supabase/supabase-js": "^2.110.2",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.42.2",
     "next": "16.2.10",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "tailwind-merge": "^3.6.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
