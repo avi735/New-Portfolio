@@ -5,7 +5,7 @@
 Welcome to the source code for my professional portfolio website, an interactive and highly optimized showcase of my engineering work. I am a **QA Automation Engineer & Full-Stack Developer** specializing in scalable platforms and automating complex systems.
 
 ## 🚀 Live Demo
-**[https://avinashkumar.dev](https://avinashkumar.dev)** *(Update with your actual deployed URL)*
+**[https://avinashkumar.dev]([https://avinashkumar.dev](https://new-portfolio-alpha-lime.vercel.app/))** *(Update with your actual deployed URL)*
 
 ## 🛠️ Tech Stack
 
