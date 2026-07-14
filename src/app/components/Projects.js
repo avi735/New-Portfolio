@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import SpotlightCard from './SpotlightCard';
 
 import thumb1 from '../../../public/project_thumb_1.png';
 import thumb2 from '../../../public/project_thumb_2.png';
@@ -135,49 +136,51 @@ export default function Projects() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
               key={titleId}
-              className={`project-card group relative flex flex-col ${featured ? 'md:flex-row md:col-span-2' : ''} bg-[#111827]/60 backdrop-blur-xl border border-white/10 hover:border-cyan-500/30 rounded-3xl overflow-hidden transition-all duration-500`}
+              className={`project-card group relative flex flex-col ${featured ? 'md:flex-row md:col-span-2' : ''} bg-[#18181b]/60 backdrop-blur-xl border border-white/10 hover:border-cyan-400/30 rounded-3xl transition-all duration-500`}
               style={{ perspective: '1000px' }}
             >
-              {/* Thumbnail Area */}
-              <div 
-                className={`relative ${featured ? 'md:w-1/2' : 'w-full'} min-h-[300px] overflow-hidden bg-slate-900 border-r border-white/5 group-hover:border-cyan-500/20 transition-colors`}
-              >
-                {thumb}
-                <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-transparent transition-colors duration-300" />
-                <div className="absolute top-4 left-4 flex gap-2">
-                  <span className={`px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-md border ${status === 'live' ? 'bg-green-500/20 text-green-300 border-green-500/30' :
+              <SpotlightCard className={`flex flex-col w-full h-full rounded-3xl ${featured ? 'md:flex-row' : ''}`}>
+                {/* Thumbnail Area */}
+                <div
+                  className={`relative ${featured ? 'md:w-1/2' : 'w-full'} min-h-[300px] overflow-hidden bg-slate-900 border-r border-white/5 group-hover:border-cyan-400/20 transition-colors`}
+                >
+                  {thumb}
+                  <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-transparent transition-colors duration-300" />
+                  <div className="absolute top-4 left-4 flex gap-2">
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-md border ${status === 'live' ? 'bg-green-500/20 text-green-300 border-green-500/30' :
                       status === 'in-use' ? 'bg-blue-500/20 text-blue-300 border-blue-500/30' :
                         'bg-purple-500/20 text-purple-300 border-purple-500/30'
-                    }`}>
-                    {statusLabel}
-                  </span>
-                </div>
-              </div>
-
-              {/* Content Area */}
-              <div className={`p-8 flex flex-col justify-center ${featured ? 'md:w-1/2' : 'flex-1'}`}>
-                <div className="font-mono text-4xl font-bold text-slate-800/80 mb-2">{num}</div>
-                <h3 className="text-2xl font-bold text-slate-100 mb-3 group-hover:text-cyan-400 transition-colors" id={titleId}>{title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-1">{desc}</p>
-
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {tags.map((t) => (
-                    <span key={t} className="px-2.5 py-1 text-[11px] font-mono text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 rounded-full">
-                      {t}
+                      }`}>
+                      {statusLabel}
                     </span>
-                  ))}
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-4 mt-auto">
-                  {links.map(({ label, href, icon, primary }) => (
-                    <a key={label} href={href} className={`inline-flex items-center gap-2 text-sm font-semibold transition-colors ${primary ? 'text-cyan-400 hover:text-cyan-300' : 'text-slate-400 hover:text-slate-200'
-                      }`} aria-label={label}>
-                      {icon}
-                      <span>{label}</span>
-                    </a>
-                  ))}
+                {/* Content Area */}
+                <div className={`p-6 flex flex-col justify-center ${featured ? 'md:w-1/2' : 'flex-1'}`}>
+                  <div className="font-mono text-3xl font-bold text-slate-800/80 mb-1">{num}</div>
+                  <h3 className="text-xl font-bold text-slate-100 mb-2 group-hover:text-cyan-400 transition-colors" id={titleId}>{title}</h3>
+                  <p className="text-slate-400 text-[13px] leading-relaxed mb-4 flex-1">{desc}</p>
+
+                  <div className="flex flex-wrap gap-2 mb-5">
+                    {tags.map((t) => (
+                      <span key={t} className="px-2 py-0.5 text-[10px] font-mono text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 rounded-full">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-4 mt-auto">
+                    {links.map(({ label, href, icon, primary }) => (
+                      <a key={label} href={href} className={`inline-flex items-center gap-1.5 text-xs font-semibold transition-colors ${primary ? 'text-cyan-400 hover:text-cyan-300' : 'text-slate-400 hover:text-slate-200'
+                        }`} aria-label={label}>
+                        {icon}
+                        <span>{label}</span>
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </SpotlightCard>
             </motion.div>
           ))}
         </div>
