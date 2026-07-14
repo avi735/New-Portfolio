@@ -1,6 +1,7 @@
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import ThreeBackground from './components/ThreeBackground';
+import Preloader from './components/Preloader';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -77,6 +78,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${inter.variable} ${jetbrainsMono.variable}`}
       style={{ backgroundColor: '#080c18' }}
+      suppressHydrationWarning
     >
       <head>
         <script
@@ -84,8 +86,14 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="relative min-h-screen bg-[#080c18] text-slate-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-100">
+      <body className="relative min-h-screen bg-[#020617] text-slate-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-100">
+        <Preloader />
         <ThreeBackground />
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 bg-grid-pattern opacity-30"></div>
+          <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/10 blur-[120px] rounded-full"></div>
+          <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-emerald-500/10 blur-[120px] rounded-full"></div>
+        </div>
         <div className="relative z-10">{children}</div>
       </body>
     </html>

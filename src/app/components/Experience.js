@@ -23,7 +23,7 @@ const TIMELINE = [
     role: 'QA Automation Engineer',
     company: 'Software Solutions Firm',
     period: '2022 – Present',
-    typeClass: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
+    typeClass: 'bg-cyan-400/20 text-cyan-300 border-cyan-400/30',
     typeLabel: 'Operational',
     bullets: [
       'Designed and implemented end-to-end automation frameworks using Selenium WebDriver and TestNG, reducing regression cycle time from 3 days to 4 hours.',

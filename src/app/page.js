@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -27,28 +26,6 @@ export default function Home() {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // ---- CURSOR GLOW EFFECT ----
-    const glow = document.createElement('div');
-    glow.style.cssText = `
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(34, 211, 238, 0.04) 0%, transparent 70%);
-      transform: translate(-50%, -50%);
-      transition: left 0.1s, top 0.1s;
-      left: -9999px;
-      top: -9999px;
-    `;
-    document.body.appendChild(glow);
-
-    const onMouseMove = (e) => {
-      glow.style.left = e.clientX + 'px';
-      glow.style.top = e.clientY + 'px';
-    };
-    document.addEventListener('mousemove', onMouseMove);
 
     // ---- SECTION TRANSITION OBSERVER (SCROLL REVEAL) ----
     const revealObserver = new IntersectionObserver((entries) => {
@@ -98,15 +75,12 @@ export default function Home() {
 
     return () => {
       window.removeEventListener('scroll', onScroll);
-      document.removeEventListener('mousemove', onMouseMove);
-      if (glow.parentNode) glow.parentNode.removeChild(glow);
       revealObserver.disconnect();
     };
   }, []);
 
   return (
     <>
-      <Preloader />
       <div className="scroll-progress" id="scroll-progress" ref={scrollProgressRef}></div>
       <Navbar />
 

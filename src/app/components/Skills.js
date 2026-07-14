@@ -17,9 +17,9 @@ const SKILL_CATEGORIES = [
   },
   {
     title: 'Systems & Infrastructure',
-    iconClass: 'text-orange-400 bg-orange-400/10 border-orange-400/20',
+    iconClass: 'text-teal-400 bg-teal-400/10 border-teal-400/20',
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><path d="M8 21h8M12 17v4" /></svg>,
-    accent: 'bg-orange-400',
+    accent: 'bg-teal-400',
     skills: [
       { name: 'Linux Administration',   pct: 88 },
       { name: 'Shell Scripting (Bash)',  pct: 85 },
@@ -159,7 +159,7 @@ export default function Skills() {
           <p className="text-sm text-slate-400 mb-6 uppercase tracking-wider">Also experienced with</p>
           <div className="flex flex-wrap justify-center gap-3">
             {TECH_PILLS.map((pill) => (
-              <span key={pill} className="px-4 py-2 text-sm text-slate-300 bg-white/5 border border-white/10 rounded-full hover:bg-cyan-500/10 hover:border-cyan-500/30 hover:text-cyan-400 transition-colors">
+              <span key={pill} className="px-4 py-2 text-sm text-slate-300 bg-white/5 border border-white/10 rounded-full hover:bg-cyan-400/10 hover:border-cyan-400/30 hover:text-cyan-400 transition-colors">
                 {pill}
               </span>
             ))}

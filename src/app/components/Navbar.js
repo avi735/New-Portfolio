@@ -23,13 +23,6 @@ export default function Navbar() {
       const y = window.scrollY;
       setScrolled(y > 50);
 
-      // Update Scroll Progress Bar
-      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolledRatio = (winScroll / height) * 100;
-      const progressBar = document.getElementById('scroll-progress-bar');
-      if (progressBar) progressBar.style.width = `${scrolledRatio}%`;
-
       const sections = document.querySelectorAll('section[id]');
       const scrollPos = y + 130;
       sections.forEach((s) => {
@@ -63,19 +56,23 @@ export default function Navbar() {
     <nav
       id="navbar"
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 h-[70px] z-50 transition-all duration-300 ${scrolled ? 'bg-[#080c18]/80 backdrop-blur-lg border-b border-cyan-400/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]' : 'bg-transparent'}`}
+      className={`fixed top-0 left-0 right-0 h-[75px] z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-[#020617]/80 backdrop-blur-xl border-b border-slate-800 shadow-[0_10px_30px_rgba(0,0,0,0.5)]' 
+          : 'bg-transparent border-transparent shadow-none'
+      }`}
     >
-      <div className="max-w-6xl mx-auto px-6 h-full flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
 
         {/* Logo */}
         <a
           href="#home"
-          className="group flex items-center gap-1 font-mono font-bold text-lg hover:scale-105 transition-transform"
+          className="group flex items-center gap-1 font-mono font-bold text-xl hover:scale-105 transition-transform"
           onClick={(e) => handleAnchorClick(e, '#home')}
         >
-          <span className="text-cyan-400 transition-colors group-hover:text-violet-400">&lt;</span>
+          <span className="text-cyan-400 transition-colors group-hover:text-emerald-400">&lt;</span>
           <span className="text-slate-100">Avinash Kumar</span>
-          <span className="text-cyan-400 transition-colors group-hover:text-violet-400">/&gt;</span>
+          <span className="text-cyan-400 transition-colors group-hover:text-emerald-400">/&gt;</span>
         </a>
 
         {/* Hamburger */}
@@ -101,27 +98,29 @@ export default function Navbar() {
 
         {/* Nav links */}
         <ul className={`
-          absolute top-[70px] left-0 right-0 bg-[#080c18]/95 backdrop-blur-xl border-b border-cyan-400/10 p-6 flex flex-col gap-2 shadow-2xl transition-all duration-300 origin-top
-          md:static md:bg-transparent md:border-none md:p-0 md:flex-row md:items-center md:gap-1.5 md:shadow-none md:translate-x-0 md:opacity-100 md:scale-y-100
+          absolute top-[75px] left-0 right-0 bg-[#020617]/95 backdrop-blur-2xl border-b border-slate-800 p-6 flex flex-col gap-3 shadow-2xl transition-all duration-300 origin-top
+          md:static md:bg-transparent md:border-none md:p-0 md:flex-row md:items-center md:gap-2 md:shadow-none md:translate-x-0 md:opacity-100 md:scale-y-100
           ${menuOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0 md:scale-y-100 md:opacity-100'}
         `}>
           {NAV_LINKS.map(({ href, label }) => (
             <li key={href} className="w-full md:w-auto">
               <a
                 href={href}
-                className={`block w-full text-center md:inline-block relative px-4 py-3 md:py-2 rounded-xl text-[15px] font-medium transition-colors ${activeId === href.slice(1) ? 'text-slate-100 bg-cyan-400/10 md:bg-transparent' : 'text-slate-400 hover:text-slate-100 hover:bg-cyan-400/5 md:hover:bg-transparent'
-                  }`}
+                className={`block w-full text-center md:inline-block relative px-4 py-3 md:py-2 rounded-lg text-[15px] font-medium transition-all duration-300 ${
+                  activeId === href.slice(1) 
+                    ? 'text-cyan-400 bg-cyan-400/10' 
+                    : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/50'
+                }`}
                 onClick={(e) => handleAnchorClick(e, href)}
               >
                 {label}
-                <span className={`hidden md:block absolute bottom-1 left-1/2 -translate-x-1/2 h-[2px] rounded-full bg-gradient-to-r from-cyan-400 to-violet-400 transition-all duration-300 ${activeId === href.slice(1) ? 'w-[calc(100%-2rem)] opacity-100' : 'w-0 opacity-0 group-hover:w-[calc(100%-2rem)] group-hover:opacity-100'}`} />
               </a>
             </li>
           ))}
           <li className="mt-4 md:mt-0 md:ml-4 w-full md:w-auto">
             <a
               href="#contact"
-              className="block text-center w-full md:w-auto px-5 py-2.5 rounded-xl text-sm font-bold bg-gradient-to-r from-cyan-400 to-violet-500 text-[#080c18] hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:-translate-y-0.5 transition-all"
+              className="block text-center w-full md:w-auto px-6 py-2.5 rounded-lg text-[15px] font-bold border border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:-translate-y-0.5 transition-all"
               onClick={(e) => handleAnchorClick(e, '#contact')}
             >
               Hire Me
@@ -130,9 +129,6 @@ export default function Navbar() {
         </ul>
 
       </div>
-
-      {/* Scroll Progress Bar */}
-      <div className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-cyan-400 to-violet-500 transition-all duration-150 ease-out z-50" id="scroll-progress-bar" />
     </nav>
   );
 }

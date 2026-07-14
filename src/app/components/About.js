@@ -40,12 +40,12 @@ export default function About() {
             {/* Pseudo-3D Avatar / Logo */}
             <div className="relative w-48 h-48 mb-10 group perspective-1000">
               <div className="absolute inset-0 rounded-full border border-cyan-400/30 animate-[spin_10s_linear_infinite]" style={{ borderTopColor: 'transparent', borderBottomColor: 'transparent' }} />
-              <div className="absolute inset-2 rounded-full border border-violet-400/30 animate-[spin_15s_linear_infinite_reverse]" style={{ borderLeftColor: 'transparent', borderRightColor: 'transparent' }} />
-              <div className="absolute inset-4 bg-gradient-to-br from-cyan-500/20 to-violet-600/20 rounded-full border border-cyan-400/50 backdrop-blur-sm flex items-center justify-center shadow-[0_0_30px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_50px_rgba(34,211,238,0.4)] transition-all duration-500 preserve-3d group-hover:rotate-y-180">
-                <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 to-violet-400 backface-hidden">
+              <div className="absolute inset-2 rounded-full border border-emerald-400/30 animate-[spin_15s_linear_infinite_reverse]" style={{ borderLeftColor: 'transparent', borderRightColor: 'transparent' }} />
+              <div className="absolute inset-4 bg-gradient-to-br from-cyan-400/20 to-violet-600/20 rounded-full border border-cyan-400/50 backdrop-blur-sm flex items-center justify-center shadow-[0_0_30px_rgba(34,211,238,0.2)] group-hover:shadow-[0_0_50px_rgba(34,211,238,0.4)] transition-all duration-500 preserve-3d group-hover:rotate-y-180">
+                <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 to-emerald-400 backface-hidden">
                   AK
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-violet-400 to-cyan-400 backface-hidden [transform:rotateY(180deg)]">
+                <div className="absolute inset-0 flex items-center justify-center text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 to-cyan-400 backface-hidden [transform:rotateY(180deg)]">
                   &lt;/&gt;
                 </div>
               </div>
@@ -53,7 +53,7 @@ export default function About() {
 
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
               {FACTS.map(({ icon, title, desc }) => (
-                <div key={title} className="fact-card opacity-0 translate-y-4 bg-slate-900/50 border border-slate-700/50 rounded-xl p-4 flex flex-col gap-2 hover:bg-slate-800/80 hover:border-cyan-500/30 transition-all">
+                <div key={title} className="fact-card opacity-0 translate-y-4 bg-slate-900/50 border border-slate-700/50 rounded-xl p-4 flex flex-col gap-2 hover:bg-slate-800/80 hover:border-cyan-400/30 transition-all">
                   <span className="text-2xl">{icon}</span>
                   <div>
                     <span className="block text-sm font-bold text-slate-200">{title}</span>
@@ -77,7 +77,7 @@ export default function About() {
               framework ever could.
             </p>
             <p suppressHydrationWarning>
-              Today, I&apos;m especially excited about the intersection of <strong className="text-violet-400">AI and automation</strong> - building intelligent workflows with LLMs like Gemini and Ollama that don&apos;t just save hours but rethink what&apos;s possible.
+              Today, I&apos;m especially excited about the intersection of <strong className="text-emerald-400">AI and automation</strong> - building intelligent workflows with LLMs like Gemini and Ollama that don&apos;t just save hours but rethink what&apos;s possible.
             </p>
             <p>
               When I&apos;m not engineering, I&apos;m exploring emerging tech, contributing to open
@@ -85,7 +85,7 @@ export default function About() {
             </p>
 
             <div className="flex flex-wrap gap-4 mt-4">
-              <a href="#projects" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-500/10 text-cyan-400 font-semibold border border-cyan-500/30 hover:bg-cyan-500/20 transition-colors">
+              <a href="#projects" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-400/10 text-cyan-400 font-semibold border border-cyan-400/30 hover:bg-cyan-400/20 transition-colors">
                 See My Work
               </a>
               <a href="/resume.pdf" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-slate-600 text-slate-300 hover:text-white hover:border-slate-400 transition-colors" download>

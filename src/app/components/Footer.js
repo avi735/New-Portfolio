@@ -10,9 +10,9 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <a href="#home" className="group flex items-center gap-1 font-mono font-bold text-xl mb-4 w-fit" aria-label="Home">
-              <span className="text-cyan-400 transition-colors group-hover:text-violet-400" aria-hidden="true">&lt;</span>
+              <span className="text-cyan-400 transition-colors group-hover:text-emerald-400" aria-hidden="true">&lt;</span>
               <span className="text-slate-100">Avinash Kumar</span>
-              <span className="text-cyan-400 transition-colors group-hover:text-violet-400">/&gt;</span>
+              <span className="text-cyan-400 transition-colors group-hover:text-emerald-400">/&gt;</span>
             </a>
             <p className="text-slate-400 mb-6 max-w-sm">Building systems that scale. Automating everything that shouldn&apos;t be manual.</p>
             <div className="flex gap-4">

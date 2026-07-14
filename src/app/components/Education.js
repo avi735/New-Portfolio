@@ -19,7 +19,7 @@ const CERTS = [
     name: 'Linux System Administration',
     issuer: 'Coursera',
     year: '2022',
-    iconClass: 'text-orange-400 bg-orange-400/10 border-orange-400/20',
+    iconClass: 'text-teal-400 bg-teal-400/10 border-teal-400/20',
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 21h8M12 17v4" /></svg>,
   },
   {
@@ -65,7 +65,7 @@ export default function Education() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Degree card */}
-          <div className="lg:col-span-4 bg-gradient-to-br from-slate-900/80 to-slate-800/80 border border-slate-700/50 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-md relative overflow-hidden group hover:border-cyan-500/50 transition-colors">
+          <div className="lg:col-span-4 bg-gradient-to-br from-slate-900/80 to-slate-800/80 border border-slate-700/50 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-md relative overflow-hidden group hover:border-cyan-400/50 transition-colors">
             <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity">
               <svg className="w-32 h-32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.5">
                 <path d="M22 10v6M2 10l10-5 10 5-10 5z" />

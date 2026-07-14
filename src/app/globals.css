@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #080c18;
-  --color-bg-secondary: #0d1225;
-  --color-bg-card: #111827;
-  --color-bg-card-hover: #161f35;
+  --color-bg-primary: #020617;
+  --color-bg-secondary: #0f172a;
+  --color-bg-card: #0f172a;
+  --color-bg-card-hover: #1e293b;
 
-  --color-accent-cyan: #22d3ee;
-  --color-accent-violet: #818cf8;
-  --color-accent-purple: #a78bfa;
-  --color-accent-orange: #f97316;
-  --color-accent-green: #4ade80;
+  --color-accent-amber: #22d3ee;
+  --color-accent-rose: #34d399;
+  --color-accent-orange: #38bdf8;
+  --color-accent-red: #10b981;
+  --color-accent-emerald: #10b981;
 }
 
 html {
@@ -19,7 +19,7 @@ html {
 
 body {
   background-color: var(--color-bg-primary);
-  color: #f1f5f9;
+  color: #f4f4f5;
   overflow-x: hidden;
   font-family: var(--font-inter), system-ui, sans-serif;
 }
@@ -45,19 +45,19 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-cyan);
+  background: var(--color-accent-amber);
 }
 
 /* gradient text helper */
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-violet));
+  background: linear-gradient(135deg, var(--color-accent-amber), var(--color-accent-rose));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-2 {
-  background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-orange));
+  background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -99,4 +99,27 @@ body {
   50% {
     transform: translateY(-15px);
   }
+}
+
+/* Animated CSS Grid Background */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+/* Scroll Reveal Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
