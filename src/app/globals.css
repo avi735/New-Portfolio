@@ -1,16 +1,19 @@
 @import "tailwindcss";
 
 @theme {
+  /* ── Background colours ── */
   --color-bg-primary: #020617;
   --color-bg-secondary: #0f172a;
   --color-bg-card: #0f172a;
   --color-bg-card-hover: #1e293b;
 
-  --color-accent-amber: #22d3ee;
-  --color-accent-rose: #34d399;
-  --color-accent-orange: #38bdf8;
-  --color-accent-red: #10b981;
-  --color-accent-emerald: #10b981;
+  /* ── Accent colours ── */
+  --color-accent-cyan: #22d3ee;
+  --color-accent-emerald: #34d399;
+  --color-accent-sky: #38bdf8;
+  --color-accent-green: #10b981;
+  --color-accent-purple: #a78bfa;
+  --color-accent-teal: #2dd4bf;
 }
 
 html {
@@ -22,6 +25,12 @@ body {
   color: #f4f4f5;
   overflow-x: hidden;
   font-family: var(--font-inter), system-ui, sans-serif;
+  /* Prevent 300ms tap delay on mobile */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  /* Prevent font inflation on mobile browsers */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* Base resets to avoid conflicts */
@@ -31,6 +40,7 @@ body {
   box-sizing: border-box;
 }
 
+/* ── Scrollbar ── */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -45,25 +55,38 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-amber);
+  background: var(--color-accent-cyan);
 }
 
-/* gradient text helper */
+/* ── Scroll Progress Bar ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, #22d3ee, #34d399);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+}
+
+/* ── Gradient text helpers ── */
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-accent-amber), var(--color-accent-rose));
+  background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-emerald));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-2 {
-  background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-red));
+  background: linear-gradient(135deg, var(--color-accent-sky), var(--color-accent-green));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* 3D utilities */
+/* ── 3D utilities ── */
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -76,13 +99,12 @@ body {
   backface-visibility: hidden;
 }
 
-/* Custom Keyframes */
+/* ── Custom Keyframes ── */
 @keyframes matrixRain {
   0% {
     transform: translateY(-100%);
     opacity: 1;
   }
-
   100% {
     transform: translateY(100vh);
     opacity: 0;
@@ -90,36 +112,107 @@ body {
 }
 
 @keyframes floatY {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0px);
   }
-
   50% {
     transform: translateY(-15px);
   }
 }
 
-/* Animated CSS Grid Background */
+/* fade-up: used by About.js fact cards */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* shimmer: used in Preloader and Hero terminal line */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #22d3ee 0%,
+    #a5f3fc 30%,
+    #34d399 50%,
+    #a5f3fc 70%,
+    #22d3ee 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* ── Animated CSS Grid Background ── */
 .bg-grid-pattern {
   background-size: 40px 40px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
   -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
 }
 
-/* Scroll Reveal Animations */
+/* ── Scroll Reveal Animations ── */
+/* Start invisible so the intersection reveal is actually visible */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Only enable will-change during the active animation phase */
+.reveal:not(.visible) {
   will-change: opacity, transform;
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+  will-change: auto;
+}
+
+/* ── Section base — fully opaque; IntersectionObserver handles per-element reveals ── */
+section {
+  opacity: 1;
+}
+
+/* ── Skill bar glow colours ── */
+.glow-cyan   { box-shadow: 0 0 8px 1px rgba(34, 211, 238, 0.5); }
+.glow-teal   { box-shadow: 0 0 8px 1px rgba(45, 212, 191, 0.5); }
+.glow-indigo { box-shadow: 0 0 8px 1px rgba(129, 140, 248, 0.5); }
+.glow-purple { box-shadow: 0 0 8px 1px rgba(192, 132, 252, 0.5); }
+
+/* ── Nav active underline ── */
+.nav-active-dot {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 6px #22d3ee;
+}
+
+/* ── Preloader progress bar ── */
+@keyframes preloaderBar {
+  from { width: 0%; }
+  to   { width: 100%; }
 }

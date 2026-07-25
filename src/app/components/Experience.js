@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { useTilt } from '../hooks/useTilt';
 
 const TIMELINE = [
   {
@@ -52,76 +54,62 @@ const TIMELINE = [
 export default function Experience() {
   const sectionRef = useRef(null);
 
-  // Mouse-tracking 3D tilt on cards
-  useEffect(() => {
-    const cards = sectionRef.current?.querySelectorAll('.timeline-card');
-    if (!cards) return;
-    const handlers = Array.from(cards).map((card) => {
-      let ticking = false;
-      const onMove = (e) => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            const rect = card.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width  - 0.5;
-            const y = (e.clientY - rect.top)  / rect.height - 0.5;
-            card.style.transform = `translateY(-4px) rotateX(${-y * 5}deg) rotateY(${x * 5}deg)`;
-            ticking = false;
-          });
-          ticking = true;
-        }
-      };
-      const onLeave = () => { card.style.transform = ''; };
-      card.addEventListener('mousemove', onMove);
-      card.addEventListener('mouseleave', onLeave);
-      return { card, onMove, onLeave };
-    });
-    return () => handlers.forEach(({ card, onMove, onLeave }) => {
-      card.removeEventListener('mousemove', onMove);
-      card.removeEventListener('mouseleave', onLeave);
-    });
-  }, []);
+  // Shared tilt hook — replaces duplicated inline handler
+  useTilt(sectionRef, '.timeline-card', { maxDeg: 5, liftPx: 4 });
 
   return (
-    <section id="experience" className="py-24 relative z-10" ref={sectionRef}>
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="experience" className="py-20 sm:py-24 relative z-10" ref={sectionRef}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
-        <div className="flex flex-col items-center text-center gap-3 mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center text-center gap-3 mb-16"
+        >
           <span className="font-mono text-xs text-cyan-400 tracking-widest uppercase">// work_history</span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-100">Experience &amp; Leadership</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-100">Experience &amp; Leadership</h2>
           <p className="max-w-xl text-slate-400">A track record of building, shipping, and leading across diverse domains.</p>
-        </div>
+        </motion.div>
 
         <div className="relative max-w-5xl mx-auto">
           {/* Center Line for Desktop */}
           <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-0.5 bg-gradient-to-b from-transparent via-slate-700 to-transparent" />
 
-          <div className="flex flex-col gap-12 md:gap-0">
-            {TIMELINE.map(({ side, role, company, period, typeClass, typeLabel, bullets, tags }) => (
-              <div key={role} className={`relative flex flex-col md:flex-row items-center w-full ${side === 'left' ? 'md:justify-start' : 'md:justify-end'}`}>
-                
+          <div className="flex flex-col gap-8 md:gap-10">
+            {TIMELINE.map(({ side, role, company, period, typeClass, typeLabel, bullets, tags }, i) => (
+              <motion.div
+                key={role}
+                initial={{ opacity: 0, x: side === 'left' ? -40 : 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className={`relative flex flex-col md:flex-row items-center w-full ${side === 'left' ? 'md:justify-start' : 'md:justify-end'}`}
+              >
                 {/* Center dot */}
                 <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-10 h-10 items-center justify-center bg-[#080c18] rounded-full z-10">
                   <div className="w-3 h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]" />
                 </div>
 
                 {/* Card */}
-                <div className={`timeline-card w-full md:w-[calc(50%-3rem)] bg-slate-900/50 border border-slate-700/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 transition-transform duration-300 ease-out preserve-3d shadow-[0_4px_32px_rgba(0,0,0,0.3)] ${side === 'left' ? 'md:mr-auto' : 'md:ml-auto'}`}>
+                <div className={`timeline-card w-full md:w-[calc(50%-3rem)] bg-slate-900/50 border border-slate-700/50 backdrop-blur-sm rounded-2xl p-5 sm:p-6 md:p-8 transition-transform duration-300 ease-out preserve-3d shadow-[0_4px_32px_rgba(0,0,0,0.3)] ${side === 'left' ? 'md:mr-auto' : 'md:ml-auto'}`}>
                   
                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
                     <div>
                       <h3 className="text-xl font-bold text-slate-100">{role}</h3>
                       <div className="text-cyan-400 font-medium text-sm mt-1">{company}</div>
                     </div>
-                    <div className="flex flex-col sm:items-end gap-2">
+                    <div className="flex flex-col sm:items-end gap-2 flex-shrink-0">
                       <span className="text-slate-400 font-mono text-sm">{period}</span>
                       <span className={`px-2.5 py-1 text-xs font-semibold rounded-full border ${typeClass}`}>{typeLabel}</span>
                     </div>
                   </div>
 
                   <ul className="flex flex-col gap-3 mb-6">
-                    {bullets.map((b, i) => (
-                      <li key={i} className="flex items-start gap-3 text-slate-300 text-sm leading-relaxed">
-                        <span className="text-cyan-400 mt-1.5 opacity-60">▹</span>
+                    {bullets.map((b, bi) => (
+                      <li key={bi} className="flex items-start gap-3 text-slate-300 text-sm leading-relaxed">
+                        <span className="text-cyan-400 mt-1.5 opacity-60 flex-shrink-0">▹</span>
                         <span>{b}</span>
                       </li>
                     ))}
@@ -136,7 +124,7 @@ export default function Experience() {
                   </div>
 
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

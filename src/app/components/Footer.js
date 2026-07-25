@@ -4,9 +4,9 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 bg-[#060913] border-t border-cyan-400/10 pt-16 pb-8">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    <footer className="relative z-10 bg-[#080c18] border-t border-slate-800/60 pt-12 sm:pt-16 pb-6 sm:pb-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12 sm:mb-16">
           {/* Brand */}
           <div className="lg:col-span-2">
             <a href="#home" className="group flex items-center gap-1 font-mono font-bold text-xl mb-4 w-fit" aria-label="Home">
@@ -62,8 +62,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
-          <p>© <span suppressHydrationWarning>{currentYear}</span> Avinash Kumar. All rights reserved. Crafted with passion &amp; precision.</p>
+        <div className="pt-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-400">
+          <p>© {currentYear} Avinash Kumar. All rights reserved. Crafted with passion &amp; precision.</p>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] animate-pulse" />
             <span>Available for new projects</span>

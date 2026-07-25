@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { motion } from 'framer-motion';
 
 const FACTS = [
   { icon: '🛠️', title: 'Automation First',  desc: 'Selenium, Playwright, TestNG' },
@@ -9,28 +10,38 @@ const FACTS = [
   { icon: '🚀', title: 'Entrepreneur',      desc: 'Educational Platform Founder' },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.2, 0.8, 0.2, 1] } },
+};
+
 export default function About() {
   const sectionRef = useRef(null);
 
-  useEffect(() => {
-    const cards = sectionRef.current?.querySelectorAll('.fact-card');
-    cards?.forEach((card, i) => { 
-      card.style.animationDelay = `${i * 120}ms`;
-      card.classList.add('animate-fade-up');
-    });
-  }, []);
-
   return (
-    <section id="about" className="py-24 relative z-10 bg-[#0d1225]/80 backdrop-blur-sm border-y border-slate-800/50" ref={sectionRef}>
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="about" className="py-20 sm:py-24 relative z-10 bg-[#0d1225]/80 backdrop-blur-sm border-y border-slate-800/50" ref={sectionRef}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
-        <div className="flex flex-col items-center text-center gap-3 mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center text-center gap-3 mb-16"
+        >
           <span className="font-mono text-xs text-cyan-400 tracking-widest uppercase">// about_me</span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-100">Who I Am</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-100">Who I Am</h2>
           <p className="max-w-xl text-slate-400">
             A passionate technologist at the intersection of automation, infrastructure, and AI.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
@@ -51,23 +62,40 @@ export default function About() {
               </div>
             </div>
 
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Fact cards — staggered entrance via framer-motion */}
+            <motion.div
+              className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-60px' }}
+            >
               {FACTS.map(({ icon, title, desc }) => (
-                <div key={title} className="fact-card opacity-0 translate-y-4 bg-slate-900/50 border border-slate-700/50 rounded-xl p-4 flex flex-col gap-2 hover:bg-slate-800/80 hover:border-cyan-400/30 transition-all">
+                <motion.div
+                  key={title}
+                  variants={cardVariants}
+                  className="fact-card bg-slate-900/50 border border-slate-700/50 rounded-xl p-4 flex flex-col gap-2 hover:bg-slate-800/80 hover:border-cyan-400/30 transition-all"
+                >
                   <span className="text-2xl">{icon}</span>
                   <div>
                     <span className="block text-sm font-bold text-slate-200">{title}</span>
                     <span className="block text-xs text-slate-400 mt-1">{desc}</span>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Text column */}
-          <div className="lg:col-span-7 flex flex-col gap-6 text-slate-300 leading-relaxed text-lg">
-            <p className="text-xl text-slate-200 font-medium border-l-4 border-cyan-400 pl-4 py-1" suppressHydrationWarning>
-              I&apos;m an engineer who doesn&apos;t just write code - I build <strong className="text-cyan-400">systems</strong> that outlast sprints and scale beyond expectations.
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="lg:col-span-7 flex flex-col gap-6 text-slate-300 leading-relaxed text-lg"
+          >
+            <p className="text-xl text-slate-200 font-medium border-l-4 border-cyan-400 pl-4 py-1">
+              I&apos;m an engineer who doesn&apos;t just write code — I build <strong className="text-cyan-400">systems</strong> that outlast sprints and scale beyond expectations.
             </p>
             <p>
               With a background spanning QA automation, full-stack development, and Linux system
@@ -76,8 +104,8 @@ export default function About() {
               the ground up, which taught me as much about leadership and product thinking as any
               framework ever could.
             </p>
-            <p suppressHydrationWarning>
-              Today, I&apos;m especially excited about the intersection of <strong className="text-emerald-400">AI and automation</strong> - building intelligent workflows with LLMs like Gemini and Ollama that don&apos;t just save hours but rethink what&apos;s possible.
+            <p>
+              Today, I&apos;m especially excited about the intersection of <strong className="text-emerald-400">AI and automation</strong> — building intelligent workflows with LLMs like Gemini and Ollama that don&apos;t just save hours but rethink what&apos;s possible.
             </p>
             <p>
               When I&apos;m not engineering, I&apos;m exploring emerging tech, contributing to open
@@ -97,7 +125,7 @@ export default function About() {
                 Download CV
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -26,20 +26,22 @@ export default function Home() {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
 
-
     // ---- SECTION TRANSITION OBSERVER (SCROLL REVEAL) ----
     const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
+      // Use a persistent counter so stagger delay is consistent across batches
+      let delay = 0;
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
             entry.target.classList.add('visible');
-          }, i * 80);
+          }, delay);
+          delay += 80;
           revealObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    // We can query all elements that need reveal animation
+    // CSS selectors for elements that get the reveal animation
     const revealSelectors = [
       '.about-grid > *',
       '.timeline-card',
@@ -58,18 +60,6 @@ export default function Home() {
           el.classList.add('reveal');
           revealObserver.observe(el);
         });
-      });
-      // Observe top level sections for simple opacity transition too
-      document.querySelectorAll('section').forEach((s) => {
-        const sectionObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.style.opacity = '1';
-              sectionObserver.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.05 });
-        sectionObserver.observe(s);
       });
     }, 100);
 

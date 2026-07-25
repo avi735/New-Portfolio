@@ -1,18 +1,25 @@
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import ThreeBackground from './components/ThreeBackground';
+import DeferredShell from './components/DeferredShell';
 import Preloader from './components/Preloader';
+
+// ⚠ Preloader is imported SYNCHRONOUSLY (not lazy) so it covers the page from
+// the very first render. This prevents the flash-then-rehide sequence that
+// delayed LCP when Preloader was lazily loaded via DeferredShell.
+// Three.js stays lazily deferred inside DeferredShell.
 
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
   display: 'swap',
+  preload: true,
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: '--font-mono',
   subsets: ['latin'],
   display: 'swap',
+  preload: false, // secondary font — don't block rendering
 });
 
 export const metadata = {
@@ -31,7 +38,7 @@ export const metadata = {
   ],
   authors: [{ name: 'Avinash Kumar' }],
   creator: 'Avinash Kumar',
-  metadataBase: new URL('https://avinashkumar.dev'), // Fallback URL, assuming .dev or similar
+  metadataBase: new URL('https://avinashkumar.dev'),
   alternates: {
     canonical: '/',
   },
@@ -46,6 +53,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Avinash Kumar | QA Automation & Full-Stack Engineer',
     description: 'Building scalable platforms and automating complex systems.',
+    creator: '@avinashkumar',
   },
   robots: {
     index: true,
@@ -68,8 +76,8 @@ const jsonLd = {
   url: 'https://avinashkumar.dev',
   sameAs: [
     'https://www.linkedin.com/in/avinash-kumar-a1444a31b/',
-    'https://github.com/avi735'
-  ]
+    'https://github.com/avi735',
+  ],
 };
 
 export default function RootLayout({ children }) {
@@ -81,14 +89,19 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <head>
+        {/* Preconnect to Google Fonts CDN — reduces render-blocking font latency */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="relative min-h-screen bg-[#020617] text-slate-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-100">
+        {/* Preloader renders synchronously — covers the page during initial load */}
         <Preloader />
-        <ThreeBackground />
+        {/* Three.js deferred — loads after page is interactive */}
+        <DeferredShell />
         <div className="fixed inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-grid-pattern opacity-30"></div>
           <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/10 blur-[120px] rounded-full"></div>

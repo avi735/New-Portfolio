@@ -3,13 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 
 const NAV_LINKS = [
-  { href: '#home', label: 'Home' },
-  { href: '#about', label: 'About' },
+  { href: '#home',       label: 'Home' },
+  { href: '#about',      label: 'About' },
   { href: '#experience', label: 'Experience' },
-  { href: '#education', label: 'Education' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#education',  label: 'Education' },
+  { href: '#skills',     label: 'Skills' },
+  { href: '#projects',   label: 'Projects' },
+  { href: '#contact',    label: 'Contact' },
 ];
 
 export default function Navbar() {
@@ -36,12 +36,23 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close menu on resize
+  // Auto-close mobile menu when the active section changes (user scrolled)
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [activeId]);
+
+  // Close menu on resize above mobile breakpoint
   useEffect(() => {
     const onResize = () => { if (window.innerWidth > 768) setMenuOpen(false); };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
 
   const handleAnchorClick = (e, href) => {
     if (href === '#') return;
@@ -57,8 +68,8 @@ export default function Navbar() {
       id="navbar"
       ref={navRef}
       className={`fixed top-0 left-0 right-0 h-[75px] z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-[#020617]/80 backdrop-blur-xl border-b border-slate-800 shadow-[0_10px_30px_rgba(0,0,0,0.5)]' 
+        scrolled
+          ? 'bg-[#020617]/80 backdrop-blur-xl border-b border-slate-800 shadow-[0_10px_30px_rgba(0,0,0,0.5)]'
           : 'bg-transparent border-transparent shadow-none'
       }`}
     >
@@ -80,6 +91,7 @@ export default function Navbar() {
           className="md:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-cyan-400/10 transition-colors z-50 relative"
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
+          aria-controls="mobile-nav-menu"
           onClick={() => setMenuOpen((p) => !p)}
         >
           {menuOpen ? (
@@ -97,23 +109,31 @@ export default function Navbar() {
         </button>
 
         {/* Nav links */}
-        <ul className={`
-          absolute top-[75px] left-0 right-0 bg-[#020617]/95 backdrop-blur-2xl border-b border-slate-800 p-6 flex flex-col gap-3 shadow-2xl transition-all duration-300 origin-top
-          md:static md:bg-transparent md:border-none md:p-0 md:flex-row md:items-center md:gap-2 md:shadow-none md:translate-x-0 md:opacity-100 md:scale-y-100
-          ${menuOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0 md:scale-y-100 md:opacity-100'}
-        `}>
+        <ul
+          id="mobile-nav-menu"
+          className={`
+            absolute top-[75px] left-0 right-0 bg-[#020617]/95 backdrop-blur-2xl border-b border-slate-800 p-6 flex flex-col gap-3 shadow-2xl
+            transition-all duration-300 origin-top overflow-hidden
+            md:static md:bg-transparent md:border-none md:p-0 md:flex-row md:items-center md:gap-2 md:shadow-none md:translate-x-0 md:opacity-100 md:max-h-none md:overflow-visible
+            ${menuOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0 md:max-h-none md:opacity-100'}
+          `}
+        >
           {NAV_LINKS.map(({ href, label }) => (
             <li key={href} className="w-full md:w-auto">
               <a
                 href={href}
-                className={`block w-full text-center md:inline-block relative px-4 py-3 md:py-2 rounded-lg text-[15px] font-medium transition-all duration-300 ${
-                  activeId === href.slice(1) 
-                    ? 'text-cyan-400 bg-cyan-400/10' 
+                className={`relative block w-full text-center md:inline-block px-4 py-3 md:py-2 rounded-lg text-[15px] font-medium transition-all duration-300 ${
+                  activeId === href.slice(1)
+                    ? 'text-cyan-400'
                     : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/50'
                 }`}
                 onClick={(e) => handleAnchorClick(e, href)}
               >
                 {label}
+                {/* Sliding underline dot for active state — desktop only */}
+                {activeId === href.slice(1) && (
+                  <span className="hidden md:block nav-active-dot" />
+                )}
               </a>
             </li>
           ))}
